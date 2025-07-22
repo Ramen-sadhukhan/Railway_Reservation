@@ -1,21 +1,52 @@
-# Railway_Reservation
+# Railway Reservation System 🚆
 
-## Getting Started
+A simple Java-based railway reservation system using JDBC and MySQL.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## 📁 Project Structure
 
-## Folder Structure
+- `src/` – Java source files
+- `lib/` – MySQL JDBC driver
+- `bin/` – Compiled `.class` files
 
-The workspace contains two folders by default, where:
+## 💻 Technologies Used
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- Java
+- JDBC
+- MySQL
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## 🛠 How to Run
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+1. Compile:
+   ```bash
+   javac -d bin -cp "lib/*" src/*.java
 
-## Dependency Management
+## SQL Table Structure
+-- Create Users Table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user'
+);
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+-- Create Trains Table
+CREATE TABLE trains (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    train_name VARCHAR(100) NOT NULL,
+    from_station VARCHAR(100) NOT NULL,
+    to_station VARCHAR(100) NOT NULL,
+    total_seats INT NOT NULL,
+    available_seats INT NOT NULL
+);
+
+-- Create Tickets Table
+CREATE TABLE tickets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    train_id INT NOT NULL,
+    passenger_name VARCHAR(100) NOT NULL,
+    age INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (train_id) REFERENCES trains(id)
+);
 
